@@ -21,6 +21,44 @@ namespace Praktika
         private string _connectData = "Server=localhost;Database=mydb;Uid=root;pwd=12345;charset=utf8";
 
         public DataSet ds;
+        private void Buttons(string _access)
+        {
+            _access = this._access;
+            switch (_access)
+            {
+                case "Администратор":
+                    button1.Enabled = true;
+                    button2.Enabled = true;
+                    button3.Enabled = true;
+                    button4.Enabled = true;
+
+                    break;
+                case "Директор":
+                    button1.Enabled = true;
+                    button2.Enabled = true;
+                    button3.Enabled = true;
+                    button4.Enabled = true;
+                    break;
+                case "Главный бухгалтер":
+                    button1.Enabled = false;
+                    button2.Enabled = true;
+                    button3.Enabled = false;
+                    button4.Enabled = true;
+                    break;
+                case "Оператор ЭВМ":
+                    button1.Enabled = false;
+                    button2.Enabled = true;
+                    button3.Enabled = false;
+                    button4.Enabled = false;
+                    break;
+                case "Кладовщик":
+                    button1.Enabled = false;
+                    button2.Enabled = false;
+                    button3.Enabled = false;
+                    button4.Enabled = false;
+                    break;
+            }
+        }
         public Form11()
             { 
                 InitializeComponent();
