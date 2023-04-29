@@ -1,0 +1,110 @@
+﻿using MySql.Data.MySqlClient;
+using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Data;
+using System.Drawing;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows.Forms;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement;
+
+namespace Praktika
+{
+    public partial class Form10 : Form
+    {
+        private DataTable _table;
+        public MySqlConnection _mycon;
+        public MySqlCommand _mycom;
+        public string _access;
+        private string _connectData = "Server=localhost;Database=mydb;Uid=root;pwd=12345;charset=utf8";
+
+        public DataSet ds;
+        public Form10()
+        {
+            InitializeComponent();
+            Initialization();
+        }
+        public void Initialization()
+        {
+            _mycon = GetDBConnection();
+            _table = new DataTable();
+            Ychet();
+        }
+        private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+            dataGridView1.Show();
+        }
+        public static MySqlConnection GetDBConnection()
+        {
+
+            string host = "localhost";
+            int port = 3306;
+            string database = "mydb";
+            string username = "root";
+            string password = "12345";
+            try
+            {
+                return GetDBConnection(host, port, database, username, password);
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine("Error: " + e.Message);
+            }
+            return null;
+        }
+        public static MySqlConnection GetDBConnection(string host, int port, string database, string username, string password)
+        {
+            String connString = "Server=" + host + ";Database=" + database
+                + ";port=" + port + ";User Id=" + username + ";password=" + password;
+
+            MySqlConnection SqlConnection = new MySqlConnection(connString);
+
+            return SqlConnection;
+        }
+        public void MSDataFill(string script, string connect, DataGridView dataGridView)
+        {
+            try
+            {
+                _table = new DataTable();
+                MySqlDataAdapter ms_data = new MySqlDataAdapter(script, _mycon);
+                ms_data.Fill(_table);
+                dataGridView.DataSource = _table;
+                _mycon.Close();
+                //_table.Clear();
+            }
+            catch (Exception exeption)
+            {
+                MessageBox.Show("" + exeption);
+            }
+        }
+        private void Form10_Load(object sender, EventArgs e)
+        {
+
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            Ychet();
+        }
+        private void Ychet()
+        {
+            string script = "Select id,Period as Период,StorageLocation as Склад_Хранения,MOL as МОЛ,Counterparties as Контрагаент, Employee as Работник from TMCInfo";
+            MSDataFill(script, _connectData, dataGridView1);
+            dataGridView1.Columns[0].Visible = false;
+        }
+        private void TMCInfo()
+        {
+            string script = "Select TMCInfo.id,TMCInfo.FIO as ФИО, TMCInfo.Position as Должность, TMCInfo.Phone as Телефон, Packers.PackerName as Заготовитель, StorageLocations.NameOfStorageLocation as Название_Склада from employees join packers on packers.id = employees.Packers_id join StorageLocations on storagelocations.id = employees.StorageLocations_id";
+            MSDataFill(script, _connectData, dataGridView1);
+            dataGridView1.Columns[0].Visible = false;
+        }
+        private void button2_Click(object sender, EventArgs e)
+        {
+            string script = $"insert into TMCInfo(Period,StorageLocation,MOL,Counterparties,Employee) value ('{dateTimePicker1}','{comboBox1.Text}','{comboBox2.Text}','{comboBox3.Text}')";
+            MSDataFill(script, _connectData, dataGridView1);
+            Initialization();
+        }
+    }
+}
