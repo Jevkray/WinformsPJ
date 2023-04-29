@@ -206,7 +206,7 @@ namespace Praktika
 
         private void button4_Click(object sender, EventArgs e)
         {
-            string script = ($"UPDATE counterparties SET Counterpartie = '{textBox1.Text}',FullName = '{textBox2.Text}',Adress = '{textBox3.Text}', Telephone = '{textBox4.Text}, MailAdress = '{textBox5.Text}', YNP = {textBox6.Text}, OKULP = {textBox7.Text}, OKPO = {textBox8.Text}, OKED = {textBox9.Text}, Director = '{textBox10.Text}','Employees_id = '{comboBox1.Text}' WHERE ID = {value2}");
+            string script = ($"UPDATE counterparties SET Counterpartie = '{textBox1.Text}',FullName = '{textBox2.Text}', Adress = '{textBox3.Text}', Telephone = '{textBox4.Text}', MailAdress = '{textBox5.Text}', YNP = '{textBox6.Text}', OKULP = '{textBox7.Text}', OKPO = '{textBox8.Text}', OKED = '{textBox9.Text}', Director = '{textBox10.Text}', Employees_id = '{comboBox1.Text}' WHERE ID = {value2}");
             MSDataFill(script, _connectData, dataGridView1);
             Initialization();
         }
