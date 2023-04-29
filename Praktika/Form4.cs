@@ -134,13 +134,13 @@ namespace Praktika
         }
         private void Counterparties()
         {
-            string script = "Select counterparties.id,counterparties.Counterpartie as Контрагент, counterparties.FullName as Наименование, counterparties.Adress as Адрес, counterparties.Telephone as Телефон, counterparties.MailAdress as Почтовый_адрес, counterparties.YNP as УНП, counterparties.OKULP as ОКЮЛП, counterparties.OKPO as ОКПО, counterparties.OKED as ОКЭД, counterparties.Direсtor as Руководитель, Employees.FIO as Сотрудник from counterparties join employees on employees.id = counterparties.Employees_id";
+            string script = "Select counterparties.id,counterparties.Counterpartie as Контрагент, counterparties.FullName as Наименование, counterparties.Adress as Адрес, counterparties.Telephone as Телефон, counterparties.MailAdress as Почтовый_адрес, counterparties.YNP as УНП, counterparties.OKULP as ОКЮЛП, counterparties.OKPO as ОКПО, counterparties.OKED as ОКЭД, counterparties.Director as Руководитель, Employees.FIO as Сотрудник from counterparties join employees on employees.id = counterparties.Employees_id";
             MSDataFill(script, _connectData, dataGridView1);
             dataGridView1.Columns[0].Visible = false;
         }
         private void button2_Click(object sender, EventArgs e)
         {
-            string script = $"insert into counterparties(Counterpartie,FullName,Adress,Telephone,MailAdress,YNP,OKULP,OKPO,OKED,Direсtor,Employees_id) value ('{textBox1.Text}','{textBox2.Text}','{textBox3.Text}','{textBox4.Text}','{textBox5.Text}','{textBox6.Text}','{textBox7.Text}','{textBox8.Text}','{textBox9.Text}','{textBoxDirector.Text}','{comboBox1.Text}')";
+            string script = $"insert into counterparties(Counterpartie,FullName,Adress,Telephone,MailAdress,YNP,OKULP,OKPO,OKED,Director,Employees_id) value ('{textBox1.Text}','{textBox2.Text}','{textBox3.Text}','{textBox4.Text}','{textBox5.Text}','{textBox6.Text}','{textBox7.Text}','{textBox8.Text}','{textBox9.Text}','{textBoxDirector.Text}','{comboBox1.Text}')";
             MSDataFill(script, _connectData, dataGridView1);
             Initialization();
         }
@@ -204,7 +204,7 @@ namespace Praktika
 
         private void button4_Click(object sender, EventArgs e)
         {
-            string script = ($"UPDATE counterparties SET Counterpartie = '{textBox1.Text}',FullName = '{textBox2.Text}', Adress = '{textBox3.Text}', Telephone = '{textBox4.Text}', MailAdress = '{textBox5.Text}', YNP = '{textBox6.Text}', OKULP = '{textBox7.Text}', OKPO = '{textBox8.Text}', OKED = '{textBox9.Text}', Direсtor = '{textBoxDirector.Text}', Employees_id = '{comboBox1.Text}' WHERE ID = {value2}");
+            string script = ($"UPDATE counterparties SET Counterpartie = '{textBox1.Text}',FullName = '{textBox2.Text}', Adress = '{textBox3.Text}', Telephone = '{textBox4.Text}', MailAdress = '{textBox5.Text}', YNP = '{textBox6.Text}', OKULP = '{textBox7.Text}', OKPO = '{textBox8.Text}', OKED = '{textBox9.Text}', Director = '{textBoxDirector.Text}', Employees_id = '{comboBox1.Text}' WHERE ID = {value2}");
             MSDataFill(script, _connectData, dataGridView1);
             Initialization();
         }
