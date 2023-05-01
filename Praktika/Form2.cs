@@ -155,7 +155,6 @@ namespace Praktika
             MSDataFill(script, _connectData, dataGridView1);
             Initialization();
         }
-
         public static void MSAdapter(string script, ComboBox comboBox, string member, string value)
         {
             string connStr1 = "Server=localhost;Database=mydb;Uid=root;pwd=12345;charset=utf8";
@@ -170,7 +169,6 @@ namespace Praktika
             comboBox.DisplayMember = member;
             comboBox.ValueMember = value;
         }
-
         public static void Adapter(ComboBox comboBox, string script, string member, string value)
         {
             string connStr1 = "Server=localhost;Database=mydb;Uid=root;pwd=12345;charset=utf8";
