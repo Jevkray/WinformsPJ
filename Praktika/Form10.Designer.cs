@@ -226,6 +226,7 @@
             this.comboBox6.RightToLeft = System.Windows.Forms.RightToLeft.No;
             this.comboBox6.Size = new System.Drawing.Size(44, 24);
             this.comboBox6.TabIndex = 30;
+
             // 
             // button4
             // 
