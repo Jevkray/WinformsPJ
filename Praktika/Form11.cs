@@ -133,5 +133,20 @@ namespace Praktika
             MSDataFill(script, _connectData, dataGridView1);
             dataGridView1.Columns[0].Visible = false;
         }
+
+        private void button1_Click_1(object sender, EventArgs e)
+        {
+
+        }
+
+        private void label2_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void label7_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }
