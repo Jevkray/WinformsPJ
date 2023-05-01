@@ -88,7 +88,6 @@
             this.groupBox1.TabIndex = 10;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Данные";
-            this.groupBox1.Enter += new System.EventHandler(this.groupBox1_Enter);
             // 
             // dateTimePicker1
             // 
@@ -99,7 +98,6 @@
             this.dateTimePicker1.Size = new System.Drawing.Size(144, 22);
             this.dateTimePicker1.TabIndex = 0;
             this.dateTimePicker1.Value = new System.DateTime(2023, 5, 1, 0, 0, 0, 0);
-            this.dateTimePicker1.ValueChanged += new System.EventHandler(this.dateTimePicker1_ValueChanged);
             // 
             // label1
             // 
@@ -110,7 +108,6 @@
             this.label1.Size = new System.Drawing.Size(39, 16);
             this.label1.TabIndex = 4;
             this.label1.Text = "Дата";
-            this.label1.Click += new System.EventHandler(this.label1_Click);
             // 
             // label2
             // 
@@ -121,7 +118,6 @@
             this.label2.Size = new System.Drawing.Size(112, 16);
             this.label2.TabIndex = 5;
             this.label2.Text = "Место хранения";
-            this.label2.Click += new System.EventHandler(this.label2_Click);
             // 
             // label3
             // 
@@ -132,7 +128,6 @@
             this.label3.Size = new System.Drawing.Size(82, 16);
             this.label3.TabIndex = 6;
             this.label3.Text = "Материалы";
-            this.label3.Click += new System.EventHandler(this.label3_Click);
             // 
             // label4
             // 
@@ -143,7 +138,6 @@
             this.label4.Size = new System.Drawing.Size(92, 16);
             this.label4.TabIndex = 7;
             this.label4.Text = "Контрагенты";
-            this.label4.Click += new System.EventHandler(this.label4_Click);
             // 
             // button3
             // 
@@ -167,7 +161,6 @@
             this.label5.Size = new System.Drawing.Size(78, 16);
             this.label5.TabIndex = 22;
             this.label5.Text = "Работники";
-            this.label5.Click += new System.EventHandler(this.label5_Click);
             // 
             // textBox2
             // 
@@ -176,7 +169,6 @@
             this.textBox2.RightToLeft = System.Windows.Forms.RightToLeft.No;
             this.textBox2.Size = new System.Drawing.Size(144, 22);
             this.textBox2.TabIndex = 24;
-            this.textBox2.TextChanged += new System.EventHandler(this.textBox2_TextChanged);
             // 
             // comboBox1
             // 
@@ -216,7 +208,6 @@
             this.comboBox4.RightToLeft = System.Windows.Forms.RightToLeft.No;
             this.comboBox4.Size = new System.Drawing.Size(44, 24);
             this.comboBox4.TabIndex = 28;
-            this.comboBox4.SelectedIndexChanged += new System.EventHandler(this.comboBox4_SelectedIndexChanged);
             // 
             // comboBox5
             // 
@@ -226,7 +217,6 @@
             this.comboBox5.RightToLeft = System.Windows.Forms.RightToLeft.No;
             this.comboBox5.Size = new System.Drawing.Size(44, 24);
             this.comboBox5.TabIndex = 29;
-            this.comboBox5.SelectedIndexChanged += new System.EventHandler(this.comboBox5_SelectedIndexChanged);
             // 
             // comboBox6
             // 
@@ -236,7 +226,6 @@
             this.comboBox6.RightToLeft = System.Windows.Forms.RightToLeft.No;
             this.comboBox6.Size = new System.Drawing.Size(44, 24);
             this.comboBox6.TabIndex = 30;
-            this.comboBox6.SelectedIndexChanged += new System.EventHandler(this.comboBox6_SelectedIndexChanged);
             // 
             // button4
             // 
@@ -275,7 +264,6 @@
             this.panel5.Name = "panel5";
             this.panel5.Size = new System.Drawing.Size(529, 467);
             this.panel5.TabIndex = 9;
-            this.panel5.Paint += new System.Windows.Forms.PaintEventHandler(this.panel5_Paint);
             // 
             // panel1
             // 
@@ -287,7 +275,6 @@
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(870, 467);
             this.panel1.TabIndex = 0;
-            this.panel1.Paint += new System.Windows.Forms.PaintEventHandler(this.panel1_Paint);
             // 
             // panel2
             // 
@@ -299,7 +286,6 @@
             this.panel2.Padding = new System.Windows.Forms.Padding(6, 0, 6, 4);
             this.panel2.Size = new System.Drawing.Size(529, 31);
             this.panel2.TabIndex = 10;
-            this.panel2.Paint += new System.Windows.Forms.PaintEventHandler(this.panel2_Paint);
             // 
             // button1
             // 
@@ -323,7 +309,6 @@
             this.panel4.Padding = new System.Windows.Forms.Padding(7, 7, 7, 1);
             this.panel4.Size = new System.Drawing.Size(529, 436);
             this.panel4.TabIndex = 11;
-            this.panel4.Paint += new System.Windows.Forms.PaintEventHandler(this.panel4_Paint);
             // 
             // dataGridView1
             // 
