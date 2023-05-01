@@ -16,6 +16,9 @@ using System.Data.SqlClient;
 //using Excel = Microsoft.Office.Interop.Excel;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement.ToolBar;
+using iTextSharp.text.pdf;
+using iTextSharp.text;
+using System.IO;
 
 namespace Praktika
 {
@@ -136,7 +139,7 @@ namespace Praktika
         {
             _access = Access.Accesses;
             Buttons(Access.Accesses);
-        }     
+        }
         private void TMCInfo()
         {
             string script = "Select tmcinfo.id, tmcinfo.Period as Период, tmcinfo.StorageLocation as Склад_Хранения, tmcinfo.MOL as МОЛ, tmcinfo.Counterparties as Контрагенты, tmcinfo.Employee as Работник from tmcinfo join StorageLocations on storagelocations.id = tmcinfo.StorageLocations_id join Counterparties on counterparties.id = tmcinfo.Counterparties_id join Employees on employees.id = tmcinfo.Employees_id";
@@ -219,6 +222,100 @@ namespace Praktika
         private void comboBox3_SelectedIndexChanged(object sender, EventArgs e)
         {
             MSAdapter($"SELECT ID  FROM employees WHERE FIO='{comboBox3.Text}'", comboBox6, "tmcinfo.id", "id");
+        }
+
+        private void button5_Click(object sender, EventArgs e)
+        {
+            if (dataGridView1.Rows.Count > 0)
+            {
+                SaveFileDialog save = new SaveFileDialog();
+                save.Filter = "PDF (*.pdf)|*.pdf";
+                save.FileName = "Учет ТМЦ.pdf";
+                bool ErrorMessage = false;
+                if (save.ShowDialog() == DialogResult.OK)
+                {
+                    if (File.Exists(save.FileName))
+                    {
+                        try
+                        {
+                            File.Delete(save.FileName);
+                        }
+                        catch (Exception ex)
+                        {
+                            ErrorMessage = true;
+                            MessageBox.Show("Невозможно записать на диск: " + ex.Message);
+                        }
+                    }
+                    if (!ErrorMessage)
+                    {
+                        try
+                        {
+                            var exePath = AppDomain.CurrentDomain.BaseDirectory;
+                            var path = System.IO.Path.Combine(exePath, "..\\..\\Fonts\\couriercyrps_bold.ttf");
+
+                            BaseFont bf = BaseFont.CreateFont(path, BaseFont.IDENTITY_H, BaseFont.NOT_EMBEDDED);
+                            PdfPTable pTable = new PdfPTable(dataGridView1.Columns.Count);
+                            pTable.DefaultCell.Padding = 3;
+                            pTable.WidthPercentage = 100;
+                            pTable.HorizontalAlignment = Element.ALIGN_LEFT;
+                            pTable.DefaultCell.BorderWidth = 1;
+
+                            iTextSharp.text.Font text = new iTextSharp.text.Font(bf, 8, iTextSharp.text.Font.NORMAL);
+                            //Добавим заголовки
+
+                            //Кастыль
+                            String[] Header = new string[6];
+                            Header[0] = "";
+                            Header[1] = "Период";
+                            Header[2] = "Склад хранения";
+                            Header[3] = "Мол";
+                            Header[4] = "Контрагент";
+                            Header[5] = "Работник";
+
+                            for (int i = 0; i < 6; i++)
+                            {
+                                PdfPCell pCell = new PdfPCell(new Phrase(Header[i], text));
+                                pCell.BackgroundColor = new iTextSharp.text.BaseColor(250, 250, 250);
+                                pTable.AddCell(pCell);
+                            }
+                            foreach (DataGridViewRow viewRow in dataGridView1.Rows)
+                            {
+                                foreach (DataGridViewCell dcell in viewRow.Cells)
+                                {
+                                    if (dcell.OwningColumn != dataGridView1.Columns[0])
+                                    {
+                                        pTable.AddCell(new Phrase(dcell.Value.ToString(), text));
+                                    }
+                                    else
+                                    {
+                                        pTable.AddCell(new Phrase("", text));
+                                    }
+                                }
+                            }
+                            using (FileStream fileStream = new FileStream(save.FileName, FileMode.Create))
+                            {
+                                Document document = new Document(PageSize.A4, 10f, 10f, 10f, 0f);
+                                PdfWriter.GetInstance(document, fileStream);
+                                document.Open();
+                                document.Add(pTable);
+                                String line = "______________________________________________________________________________________";
+                                document.Add(new Paragraph(line));
+                                document.Close();
+                                fileStream.Close();
+                            }
+                            MessageBox.Show("Сохранение завершено успешно", "Уведомление");
+                        }
+                        catch (Exception ex)
+                        {
+                            MessageBox.Show("Ошибка при сохранении" + ex.Message);
+                        }
+                    }
+                }
+            }
+            else
+            {
+                MessageBox.Show("Записей не найдено", "Ошибка");
+            }
         }
     }
 }
