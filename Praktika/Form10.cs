@@ -9,6 +9,8 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement;
+using ComboBox = System.Windows.Forms.ComboBox;
+using System.Data.SqlClient;
 
 namespace Praktika
 {
@@ -21,6 +23,44 @@ namespace Praktika
         private string _connectData = "Server=localhost;Database=mydb;Uid=root;pwd=12345;charset=utf8";
 
         public DataSet ds;
+        private void Buttons(string _access)
+        {
+            _access = this._access;
+            switch (_access)
+            {
+                case "Администратор":
+                    button1.Enabled = true;
+                    button2.Enabled = true;
+                    button3.Enabled = true;
+                    button4.Enabled = true;
+
+                    break;
+                case "Директор":
+                    button1.Enabled = true;
+                    button2.Enabled = true;
+                    button3.Enabled = true;
+                    button4.Enabled = true;
+                    break;
+                case "Главный бухгалтер":
+                    button1.Enabled = false;
+                    button2.Enabled = true;
+                    button3.Enabled = false;
+                    button4.Enabled = true;
+                    break;
+                case "Оператор ЭВМ":
+                    button1.Enabled = false;
+                    button2.Enabled = true;
+                    button3.Enabled = false;
+                    button4.Enabled = false;
+                    break;
+                case "Кладовщик":
+                    button1.Enabled = false;
+                    button2.Enabled = false;
+                    button3.Enabled = false;
+                    button4.Enabled = false;
+                    break;
+            }
+        }
         public Form10()
         {
             InitializeComponent();
@@ -30,7 +70,7 @@ namespace Praktika
         {
             _mycon = GetDBConnection();
             _table = new DataTable();
-            Ychet();
+            TMCInfo();
         }
         private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
@@ -79,30 +119,84 @@ namespace Praktika
                 MessageBox.Show("" + exeption);
             }
         }
-        private void Form10_Load(object sender, EventArgs e)
-        {
-
-        }
-
         private void button1_Click(object sender, EventArgs e)
         {
-            Ychet();
+            TMCInfo();
         }
-        private void Ychet()
+        private void Form10_Load(object sender, EventArgs e)
         {
-            string script = "Select id,Period as Период,StorageLocation as Склад_Хранения,MOL as МОЛ,Counterparties as Контрагаент, Employee as Работник from TMCInfo";
-            MSDataFill(script, _connectData, dataGridView1);
-            dataGridView1.Columns[0].Visible = false;
-        }
+            _access = Access.Accesses;
+            Buttons(Access.Accesses);
+        }     
         private void TMCInfo()
         {
-            string script = "Select TMCInfo.id,TMCInfo.FIO as ФИО, TMCInfo.Position as Должность, TMCInfo.Phone as Телефон, Packers.PackerName as Заготовитель, StorageLocations.NameOfStorageLocation as Название_Склада from employees join packers on packers.id = employees.Packers_id join StorageLocations on storagelocations.id = employees.StorageLocations_id";
+            string script = "Select id,Period as Период,StorageLocation as Склад_Хранения,MOL as МОЛ,Counterparties as Контрагенты, Employee as Работник from TMCInfo";
             MSDataFill(script, _connectData, dataGridView1);
             dataGridView1.Columns[0].Visible = false;
         }
+
         private void button2_Click(object sender, EventArgs e)
         {
-            string script = $"insert into TMCInfo(Period,StorageLocation,MOL,Counterparties,Employee) value ('{dateTimePicker1}','{comboBox1.Text}','{comboBox2.Text}','{comboBox3.Text}')";
+            string script = $"insert into TMCInfo(Period,StorageLocation,MOL,Counterparties,Employee,StorageLocations_id,Counterparties_id,Employees_id) value ('{dateTimePicker1.Value.ToString("yyyy.MM.dd").Substring(0, 10)}','{textBox1.Text}','{textBox2.Text}','{textBox3.Text}','{textBox4.Text}','4','1','1')";
+            MSDataFill(script, _connectData, dataGridView1);
+            Initialization();
+        }
+        public static void MSAdapter(string script, ComboBox comboBox, string member, string value)
+        {
+            string connStr1 = "Server=localhost;Database=mydb;Uid=root;pwd=12345;charset=utf8";
+            DataTable patientTable = new DataTable();
+            MySqlConnection myConnection = new MySqlConnection(connStr1);
+            {
+                MySqlCommand command = new MySqlCommand(script, myConnection);
+                MySqlDataAdapter adapter = new MySqlDataAdapter(command);
+                adapter.Fill(patientTable);
+            }
+            comboBox.DataSource = patientTable;
+            comboBox.DisplayMember = member;
+            comboBox.ValueMember = value;
+        }
+        public static void Adapter(ComboBox comboBox, string script, string member, string value)
+        {
+            string connStr1 = "Server=localhost;Database=mydb;Uid=root;pwd=12345;charset=utf8";
+            DataTable patientTable = new DataTable();
+            MySqlConnection myConnection = new MySqlConnection(connStr1);
+            {
+                MySqlCommand command = new MySqlCommand(script, myConnection);
+                MySqlDataAdapter adapter = new MySqlDataAdapter(command);
+                adapter.Fill(patientTable);
+            }
+            comboBox.DataSource = patientTable;
+            comboBox.DisplayMember = member;
+            comboBox.ValueMember = value;
+        }
+        public string value2;
+        private void dataGridView1_RowHeaderMouseClick(object sender, DataGridViewCellMouseEventArgs e)
+        {
+            value2 = dataGridView1.Rows[e.RowIndex].Cells[0].Value.ToString();
+        }
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+            {
+                try
+                {
+                    DialogResult zz = MessageBox.Show("Вы уверены что хотите удалить отчет?", "Удаление", MessageBoxButtons.YesNo);
+                    if (zz == DialogResult.Yes)
+                    {
+
+
+                        string script = ($"DELETE FROM tmcinfo WHERE ID = {value2} ");
+                        MSDataFill(script, _connectData, dataGridView1);
+                        Initialization();
+                    }
+                }
+                catch { MessageBox.Show("Неверно введены данные"); }
+            }
+        }
+
+        private void button4_Click(object sender, EventArgs e)
+        {
+            string script = ($"UPDATE tmcinfo SET Period = '{dateTimePicker1.Value.ToString("yyyy.MM.dd").Substring(0, 10)}',StorageLocation = '{textBox1.Text}', MOL = '{textBox2.Text}', Counterparties = '{textBox3.Text}', Employee = '{textBox4.Text}', StorageLocations_id = '4',Counterparties_id = '1', Employees_id = '1' WHERE ID = {value2}");
             MSDataFill(script, _connectData, dataGridView1);
             Initialization();
         }

@@ -105,8 +105,6 @@ namespace Praktika
 
             return SqlConnection;
         }
-
-        public string value2;
         public void MSDataFill(string script, string connect, DataGridView dataGridView)
         {
             try
@@ -177,7 +175,7 @@ namespace Praktika
         {
             MSAdapter($"SELECT ID  FROM employees WHERE FIO='{comboBox2.Text}'", comboBox1, "id", "id");
         }
-
+        public string value2;
         private void button3_Click(object sender, EventArgs e)
         {
             {
